@@ -11,12 +11,14 @@ CONFIG += c++17
 SOURCES += \
     MotionDisplayGadget.cpp \
     Scenium.cpp \
+    UpDownLeftRightIum.cpp \
     main.cpp \
     widget.cpp
 
 HEADERS += \
     MotionDisplayGadget.h \
     Scenium.h \
+    UpDownLeftRightIum.h \
     widget.h
 
 FORMS += \

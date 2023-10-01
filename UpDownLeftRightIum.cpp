@@ -1,4 +1,4 @@
-#include "Scenium.h"
+#include "UpDownLeftRightIum.h"
 
 UpDownLeftRightIum::UpDownLeftRightIum (QObject *parent) : QObject{ parent } {}
 
@@ -39,6 +39,32 @@ bool UpDownLeftRightIum::eventFilter (QObject *obj, QEvent *event)
 		default:
 			break;
 		}
+	}
+	else if (event->type() == QEvent::GraphicsSceneMousePress)
+	{
+		QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *> (event);
+		{
+			//			qDebug() << "MB Pressed" << mouseEvent;
+			emit mouseButtonPressed (mouseEvent->button());
+		}
+	}
+	else if (event->type() == QEvent::GraphicsSceneMouseRelease)
+	{
+		QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *> (event);
+		{
+			//			qDebug() << "MB Released" << mouseEvent;
+			emit mouseButtonReleased (mouseEvent->button());
+		}
+	}
+	else if (event->type() == QEvent::GraphicsSceneMouseMove)
+	{
+		QGraphicsSceneMouseEvent *mouseEvent = static_cast<QGraphicsSceneMouseEvent *> (event);
+		//				qDebug() << mouseEvent->scenePos();
+		emit mouseMoved (mouseEvent->scenePos());
+	}
+	else
+	{
+		//		qDebug() << event;
 	}
 
 	return QObject::eventFilter (obj, event);

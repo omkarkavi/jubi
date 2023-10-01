@@ -1,9 +1,10 @@
-#ifndef SCENIUM_H
-#define SCENIUM_H
+#ifndef UPDOWNLEFTRIGHTIUM_H
+#define UPDOWNLEFTRIGHTIUM_H
 
 #include <QEvent>
 #include <QKeyEvent>
 #include <QObject>
+#include <QGraphicsSceneMouseEvent>
 
 class UpDownLeftRightIum : public QObject
 {
@@ -16,6 +17,9 @@ public:
 signals:
 	void keyPressed (QKeyEvent *event);
 	void keyReleased (QKeyEvent *event);
+	void mouseButtonPressed (Qt::MouseButton button);
+	void mouseButtonReleased (Qt::MouseButton button);
+	void mouseMoved (QPointF location);
 };
 
-#endif // SCENIUM_H
+#endif // UPDOWNLEFTRIGHTIUM_H

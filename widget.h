@@ -11,6 +11,7 @@
 #include <QGraphicsRectItem>
 #include <QWidget>
 #include <QTimer>
+#include "UpDownLeftRightIum.h"
 #include "Scenium.h"
 
 QT_BEGIN_NAMESPACE
@@ -37,9 +38,9 @@ private slots:
 
 private:
 	Ui::Widget *ui;
-	QGraphicsItemGroup *aThingyToMove;
+	QGraphicsItemGroup *aThingyToMove, *directionWidget;
 	QGraphicsSimpleTextItem *upArrow, *downArrow, *leftArrow, *rightArrow;
-	QGraphicsScene *scene;
+	Scenium *scene;
 	QGraphicsLineItem *pointingLine;
 	//	QGraphicsRectItem *boundingBoxRect;
 	QList<QGraphicsEllipseItem *> enemyList;
@@ -52,7 +53,7 @@ private:
 		bool left{};
 		bool clock{};
 		bool anticlock{};
-
+		QPointF mousePointerLocation{};
 		bool poofingOn{};
 	} currentMovement{};
 
@@ -66,5 +67,7 @@ private:
 	bool poofTheEnemy (QGraphicsItem *potentialEnemy);
 
 	void addEnemies ();
+
+	QPointF calcDeltaMovement (qreal rotatedAngle, qreal movementDirection);
 };
 #endif // WIDGET_H
