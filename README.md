@@ -2,7 +2,8 @@
 
 - A really easy code for a game
 - Using QGraphicsScene
-- Maybe useful to put in Qt Examples
+- This piece of code will have logical errors needing analysis.
+	- Can be used for testing ability of programmers.
 
 ## Expected Controls
 - Up/Down/Right/left Keyboard arrow keys for movement
