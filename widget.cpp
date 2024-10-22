@@ -10,14 +10,15 @@ Widget::Widget (QWidget *parent) : QWidget (parent), ui (new Ui::Widget)
 	aThingyToMove = new QGraphicsItemGroup;
 	directionWidget = new QGraphicsItemGroup;
 
-	upArrow = new QGraphicsSimpleTextItem ("⤊");
-	upArrow->setBrush (QBrush (Qt::gray));
+    upArrow = new QGraphicsSimpleTextItem ("↑"); // Proper up arrow is added
+    //upArrow->setBrush (Qt::yellow);
+    upArrow->setPen(QPen(Qt::black));
 	downArrow = new QGraphicsSimpleTextItem ("↓");
-	downArrow->setBrush (QBrush (Qt::yellow));
+    downArrow->setPen (QPen (Qt::black));
 	leftArrow = new QGraphicsSimpleTextItem ("←");
-	leftArrow->setBrush (QBrush (Qt::yellow));
+    leftArrow->setPen (QPen (Qt::black));
 	rightArrow = new QGraphicsSimpleTextItem ("→");
-	rightArrow->setBrush (QBrush (Qt::yellow));
+    rightArrow->setPen (QPen (Qt::black));
 
 	directionWidget->addToGroup (upArrow);
 	directionWidget->addToGroup (downArrow);
@@ -47,6 +48,7 @@ Widget::Widget (QWidget *parent) : QWidget (parent), ui (new Ui::Widget)
 	ui->graphicsView->installEventFilter (filter);
 	scene->installEventFilter (filter);
 	addEnemies();
+    addFriends();
 
 	scene->addItem (aThingyToMove);
 	scene->addItem (directionWidget);
@@ -95,7 +97,7 @@ Widget::Widget (QWidget *parent) : QWidget (parent), ui (new Ui::Widget)
 		default:
 			break;
 		}
-		//		qDebug() << "current movement set: " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
+                //qDebug() << "current movement set: " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
 	});
 	connect (filter, &UpDownLeftRightIum::keyReleased, this,
 		[this] (QKeyEvent *event)
@@ -148,7 +150,7 @@ Widget::Widget (QWidget *parent) : QWidget (parent), ui (new Ui::Widget)
 		{
 		case Qt::LeftButton:
 			currentMovement.poofingOn = false;
-			pointingLine->setPen (QPen (Qt::darkGray));
+            pointingLine->setPen (QPen (Qt::darkGray));
 			break;
 		default:
 			break;
@@ -161,6 +163,9 @@ Widget::Widget (QWidget *parent) : QWidget (parent), ui (new Ui::Widget)
 		ui->textBrowser_2->setText ("X : " + QString::number (currentMovement.mousePointerLocation.rx()) + "\n"
 			+ "Y : " + QString::number (currentMovement.mousePointerLocation.ry()));
 	});
+
+
+
 }
 
 Widget::~Widget() { delete ui; }
@@ -170,55 +175,55 @@ void Widget::spriteMovement()
 	qreal movementDirection{};
 	directionWidget->setRotation (0);
 	bool didSth = false;
-	//	QTransform initPos = aThingyToMove->sceneTransform();
+    //QTransform initPos = aThingyToMove->sceneTransform();
 
-	//	qDebug() << "current movement get : " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
+        qDebug() << "current movement get : " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
 	if (currentMovement.up)
 	{
-		//		qDebug() << "UP";
+                qDebug() << "UP";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0, -1.5));
 		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, -1.5));
-		upArrow->setBrush (Qt::green);
+        upArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		upArrow->setBrush (Qt::gray);
-	}
+        upArrow->setPen(QPen(Qt::gray));
+    }
 	if (currentMovement.down)
 	{
-		//		qDebug() << "DOWN";
+                qDebug() << "DOWN";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0, 0.7));
 		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, 0.7));
-		downArrow->setBrush (Qt::green);
+        downArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		downArrow->setBrush (Qt::gray);
+        downArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.right)
 	{
-		//		qDebug() << "RIGHT";
+                qDebug() << "RIGHT";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0.8, 0));
 		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0.8, 0));
-		rightArrow->setBrush (Qt::green);
+        rightArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		rightArrow->setBrush (Qt::gray);
+        rightArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.left)
 	{
-		//		qDebug() << "LEFT";
+                qDebug() << "LEFT";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (-0.8, 0));
-		leftArrow->setBrush (Qt::green);
+        leftArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		leftArrow->setBrush (Qt::gray);
+        leftArrow->setPen(QPen(Qt::gray));
 	}
 
 	if (!(currentMovement.up && currentMovement.down))
@@ -309,98 +314,98 @@ void Widget::spriteMovement()
 void Widget::spriteMovement_M2()
 {
 	bool didSth = false;
-	//	QTransform initPos = aThingyToMove->sceneTransform();
+    //	QTransform initPos = aThingyToMove->sceneTransform();
 
-	//	qDebug() << "current movement get : " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
+    //	qDebug() << "current movement get : " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
 	if (currentMovement.up)
 	{
-		//		qDebug() << "UP";
+                qDebug() << "UP";
 		QPointF speedPoint (0, -1.5);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
 			speedPoint.rx() * qSin (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
 		aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
-		upArrow->setBrush (Qt::green);
+        upArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		upArrow->setBrush (Qt::gray);
+        upArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.down)
 	{
-		//		qDebug() << "DOWN";
+                qDebug() << "DOWN";
 		QPointF speedPoint (0, 0.7);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
 			speedPoint.rx() * qSin (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
 		aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
-		downArrow->setBrush (Qt::green);
+        downArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		downArrow->setBrush (Qt::gray);
+        downArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.right)
 	{
-		//		qDebug() << "RIGHT";
+                qDebug() << "RIGHT";
 		QPointF speedPoint (0.8, 0);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
 			speedPoint.rx() * qSin (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qCos (qDegreesToRadians (aThingyToMove->rotation())));
 		aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
-		rightArrow->setBrush (Qt::green);
+        rightArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		rightArrow->setBrush (Qt::gray);
+        rightArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.left)
 	{
-		//		qDebug() << "LEFT";
+                qDebug() << "LEFT";
 		QPointF speedPoint (-0.8, 0);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
 			speedPoint.rx() * qSin (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qCos (qDegreesToRadians (aThingyToMove->rotation())));
 		aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
-		leftArrow->setBrush (Qt::green);
+        leftArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
 	else
 	{
-		leftArrow->setBrush (Qt::gray);
+        leftArrow->setPen(QPen(Qt::gray));
 	}
 	if (currentMovement.clock)
 	{
-		//		qDebug() << "CLOCK";
-		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (1));
+        //		qDebug() << "CLOCK";
+        //		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (1));
 		aThingyToMove->setRotation (aThingyToMove->rotation() + 1);
-		//	aThingyToMove->sceneTransform();
-		//				aThingyToMove->setTransform (aThingyToMove->transform().rotate (1));
+        //	aThingyToMove->sceneTransform();
+        //				aThingyToMove->setTransform (aThingyToMove->transform().rotate (1));
 
-		//		qDebug() << aThingyToMove->transformOriginPoint() << aThingyToMove->sceneTransform();
+        //		qDebug() << aThingyToMove->transformOriginPoint() << aThingyToMove->sceneTransform();
 
-		//		leftArrow->setBrush (Qt::green);
+        //		leftArrow->setBrush (Qt::green);
 		didSth = true;
 	}
 	else
 	{
-		//		leftArrow->setBrush (Qt::gray);
+        //		leftArrow->setBrush (Qt::gray);
 	}
 	if (currentMovement.anticlock)
 	{
-		//		qDebug() << "ANTICLOCK";
-		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (-1));
+        //		qDebug() << "ANTICLOCK";
+        //		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (-1));
 		aThingyToMove->setRotation (aThingyToMove->rotation() - 1);
-		//		aThingyToMove->setTransform (aThingyToMove->transform().rotate (-1));
+        //		aThingyToMove->setTransform (aThingyToMove->transform().rotate (-1));
 
-		//		leftArrow->setBrush (Qt::green);
+        //		leftArrow->setBrush (Qt::green);
 		didSth = true;
 	}
 	else
@@ -436,8 +441,13 @@ bool Widget::poofTheEnemy (QGraphicsItem *potentialEnemy)
 {
 	if (potentialEnemy->data (0) == "Enemy" && potentialEnemy->data (1) == "Poofable" && currentMovement.poofingOn)
 	{
-		potentialEnemy->setVisible (false);
+        potentialEnemy->setVisible (false);
+        //scene->removeItem(potentialEnemy);
+
+
+
 		ui->sB_D3DZC0unter->setValue (ui->sB_D3DZC0unter->value() + 1);
+
 		return true;
 	}
 	return false;
@@ -450,28 +460,66 @@ void Widget::addEnemies()
 		int x = QRandomGenerator::global()->bounded (xl, xr);
 		int y = QRandomGenerator::global()->bounded (yu, yd);
 
-		QGraphicsEllipseItem *a = new QGraphicsEllipseItem (x, y, 10, 10);
-		a->setPen (QPen (Qt::white));
-		a->setBrush (QBrush (Qt::red));
-		a->setData (0, QStringLiteral ("Enemy"));
-		a->setData (1, QStringLiteral ("Poofable"));
-		scene->addItem (a);
-		enemyList << a;
+        QGraphicsEllipseItem *a = new QGraphicsEllipseItem (x, y, 10, 10);
+        a->setPen (QPen (Qt::black));
+        a->setBrush (QBrush (Qt::red));
+        a->setData (0, QStringLiteral ("Enemy"));
+        a->setData (1, QStringLiteral ("Poofable"));
+        scene->addItem (a);
+        enemyList << a;
+
 	}
-	enemyRespawnTimer.start (1000);
+    enemyRespawnTimer.start (5000);
 	connect (&enemyRespawnTimer, &QTimer::timeout, this,
 		[this] ()
 		{
-		int n = QRandomGenerator::global()->bounded (10);
-		enemyList[n]->setVisible (true);
+        // int n = QRandomGenerator::global()->bounded (10);
+
+  //       enemyList[n]->setVisible (true);
+        int x = QRandomGenerator::global()->bounded (xl, xr);   // Changed the logic to add enemies, earlier code was just hiding and showing the enemies as respawning
+        int y = QRandomGenerator::global()->bounded (yu, yd);   // Now the code will remove the enemy from the scene and after respawning timer is set will create a new enemy object
+
+        QGraphicsEllipseItem *a = new QGraphicsEllipseItem (x, y, 10, 10);
+        a->setPen (QPen (Qt::black));
+        a->setBrush (QBrush (Qt::red));
+        a->setData (0, QStringLiteral ("Enemy"));
+        a->setData (1, QStringLiteral ("Poofable"));
+        scene->addItem (a);
+        enemyList << a;
 	});
 }
+
+
+
+
+void Widget::addFriends()   // Added logic for adding friends which are non poofable
+{
+    for (int i = 0; i < 10; i++)
+    {
+        int x = QRandomGenerator::global()->bounded (xl, xr);
+        int y = QRandomGenerator::global()->bounded (yu, yd);
+
+
+        QGraphicsEllipseItem *a = new QGraphicsEllipseItem (x, y, 10, 10);
+        a->setPen (QPen (Qt::black));
+        a->setBrush (QBrush (Qt::black));
+        a->setData (0, QStringLiteral ("Friend"));
+        a->setData (1, QStringLiteral ("Safe"));
+        scene->addItem (a);
+        friendList << a;
+
+
+    }
+
+}
+
+
 
 qreal possiblePowerDeltaC (qreal angle0Delta, qreal angle90Delta, qreal relativeMovementDirection)
 {
 	qreal fullPower = qSqrt ((angle0Delta * angle0Delta) + (angle90Delta * angle90Delta));
 	qreal fullPowerAngle = qAtan (angle90Delta / angle0Delta);
-	if ((relativeMovementDirection < fullPowerAngle + 0.001) && (relativeMovementDirection > fullPowerAngle - 0.001))
+    if ((relativeMovementDirection < fullPowerAngle + 0.001) && (relativeMovementDirection > fullPowerAngle - 0.001))
 	{
 		// Success
 		// => fullPowerDelta in movementDirection
@@ -629,14 +677,14 @@ void Widget::on_pB_SwitchMovementMethod_clicked()
 	static bool a = false;
 	if (a)
 	{
-		upArrow->setText ("↑");
+		upArrow->setText ("↑");  // Proper up arrow symbol added
 		connect (&spriteMovementTimer, &QTimer::timeout, this, &Widget::spriteMovement);
 		disconnect (&spriteMovementTimer, &QTimer::timeout, this, &Widget::spriteMovement_M2);
 		a = false;
 	}
 	else
 	{
-		upArrow->setText ("⤊");
+        upArrow->setText ("↑");
 		connect (&spriteMovementTimer, &QTimer::timeout, this, &Widget::spriteMovement_M2);
 		disconnect (&spriteMovementTimer, &QTimer::timeout, this, &Widget::spriteMovement);
 		a = true;
