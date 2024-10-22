@@ -44,6 +44,7 @@ private:
 	QGraphicsLineItem *pointingLine;
 	//	QGraphicsRectItem *boundingBoxRect;
 	QList<QGraphicsEllipseItem *> enemyList;
+    QList<QGraphicsEllipseItem *> friendList;
 
 	struct SPRITE_MOVEMENT
 	{
@@ -67,6 +68,7 @@ private:
 	bool poofTheEnemy (QGraphicsItem *potentialEnemy);
 
 	void addEnemies ();
+    void addFriends ();
 
 	QPointF calcDeltaMovement (qreal rotatedAngle, qreal movementDirection);
 };

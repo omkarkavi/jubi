@@ -182,7 +182,14 @@ void Widget::spriteMovement()
 	{
                 qDebug() << "UP";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0, -1.5));
-		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, -1.5));
+         //   aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, -1.5));
+
+                QPointF speedPoint (0, -1.5);                                                      // Added logic for setting position of aThingyToMove
+                QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
+                                      speedPoint.rx() * qSin (qDegreesToRadians (-aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
+        aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
         upArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
@@ -194,7 +201,13 @@ void Widget::spriteMovement()
 	{
                 qDebug() << "DOWN";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0, 0.7));
-		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, 0.7));
+        //    aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0, 0.7));
+                QPointF speedPoint (0, 0.7);                                                                     // Added logic for setting position of aThingyToMove
+                QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
+                                      speedPoint.rx() * qSin (qDegreesToRadians (-aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
+                aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
         downArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
@@ -206,7 +219,13 @@ void Widget::spriteMovement()
 	{
                 qDebug() << "RIGHT";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (0.8, 0));
-		//		aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0.8, 0));
+        //    aThingyToMove->setPos (aThingyToMove->pos() + QPointF (0.8, 0));
+                QPointF speedPoint (0.8, 0);
+                QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))        // Added logic for setting position of aThingyToMove
+                                          + speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
+                                      speedPoint.rx() * qSin (qDegreesToRadians (aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qCos (qDegreesToRadians (aThingyToMove->rotation())));
+                aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
         rightArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
@@ -218,6 +237,13 @@ void Widget::spriteMovement()
 	{
                 qDebug() << "LEFT";
 		//		aThingyToMove->setTransform (aThingyToMove->sceneTransform().translate (-0.8, 0));
+
+                QPointF speedPoint (-0.8, 0);
+                QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))      // Added logic for setting position of aThingyToMove
+                                          + speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
+                                      speedPoint.rx() * qSin (qDegreesToRadians (aThingyToMove->rotation()))
+                                          + speedPoint.ry() * qCos (qDegreesToRadians (aThingyToMove->rotation())));
+                aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
         leftArrow->setPen(QPen(Qt::green));
 		didSth = true;
 	}
@@ -226,59 +252,59 @@ void Widget::spriteMovement()
         leftArrow->setPen(QPen(Qt::gray));
 	}
 
-	if (!(currentMovement.up && currentMovement.down))
-	{
-		if (currentMovement.up)
-		{
-			movementDirection = 0;
-			if (!(currentMovement.left && currentMovement.right))
-			{
-				if (currentMovement.left)
-				{
-					movementDirection = 315;
-				}
-				else if (currentMovement.right)
-				{
-					movementDirection = 45;
-				}
-			}
-		}
-		else if (currentMovement.down)
-		{
-			movementDirection = 180;
-			if (!(currentMovement.left && currentMovement.right))
-			{
-				if (currentMovement.left)
-				{
-					movementDirection = 225;
-				}
-				else if (currentMovement.right)
-				{
-					movementDirection = 135;
-				}
-			}
-		}
-		else if (!(currentMovement.left && currentMovement.right))
-		{
-			if (currentMovement.left)
-			{
-				movementDirection = 270;
-			}
-			else if (currentMovement.right)
-			{
-				movementDirection = 90;
-			}
-		}
-	}
+    // if (!(currentMovement.up && currentMovement.down))
+    // {
+    // 	if (currentMovement.up)
+    // 	{
+ //            movementDirection = 90;
+ //             if ((currentMovement.left || currentMovement.right))
+ //         {
+ //                if (currentMovement.left)
+ //                {
+ //                     movementDirection = 315;
+ //                }
+ //                else if (currentMovement.right)
+ //                {
+ //                    movementDirection = 45;
+ //                }
+ //             }
+    // 	}
+    // 	else if (currentMovement.down)
+    // 	{
+ //            movementDirection = 270;
+ //             if ((currentMovement.left || currentMovement.right))
+ //             {
+ //                if (currentMovement.left)
+ //                {
+ //                     movementDirection = 225;
+ //                }
+ //                else if (currentMovement.right)
+ //                {
+ //                    movementDirection = 135;
+ //                }
+ //             }
+    // 	}
+ //         else if ((currentMovement.left || currentMovement.right))
+ //         {
+    // 		if (currentMovement.left)
+    // 		{
+ //                movementDirection = 0;
+    // 		}
+    // 		else if (currentMovement.right)
+    // 		{
+ //                movementDirection = 180;
+    // 		}
+ //        }
+    // }
 
-	qreal direction = QLineF (aThingyToMove->scenePos(), currentMovement.mousePointerLocation).angle();
-	aThingyToMove->setRotation (-direction + 90);
+    qreal direction = QLineF (aThingyToMove->scenePos(), currentMovement.mousePointerLocation).angle();
+    aThingyToMove->setRotation (-direction);
 
-	if (didSth)
-	{
-		aThingyToMove->setPos (aThingyToMove->scenePos() + calcDeltaMovement (aThingyToMove->rotation(), movementDirection));
-	}
-	directionWidget->setPos (aThingyToMove->scenePos());
+     if (didSth)
+     {
+         aThingyToMove->setPos (aThingyToMove->scenePos());
+     }
+    directionWidget->setPos (aThingyToMove->scenePos());
 
 	static QPointF prevMousePointerPos;
 	if (prevMousePointerPos != currentMovement.mousePointerLocation)
@@ -319,12 +345,12 @@ void Widget::spriteMovement_M2()
     //	qDebug() << "current movement get : " << currentMovement.up << currentMovement.down << currentMovement.right << currentMovement.left;
 	if (currentMovement.up)
 	{
-                qDebug() << "UP";
+                qDebug() << "UP-1";
 		QPointF speedPoint (0, -1.5);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
 			speedPoint.rx() * qSin (qDegreesToRadians (-aThingyToMove->rotation()))
-				+ speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
+                + speedPoint.ry() * qCos (qDegreesToRadians (-aThingyToMove->rotation())));
 		aThingyToMove->setPos (aThingyToMove->pos() + finalPosPoint);
         upArrow->setPen(QPen(Qt::green));
 		didSth = true;
@@ -335,7 +361,7 @@ void Widget::spriteMovement_M2()
 	}
 	if (currentMovement.down)
 	{
-                qDebug() << "DOWN";
+                qDebug() << "DOWN-1";
 		QPointF speedPoint (0, 0.7);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (-aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (-aThingyToMove->rotation())),
@@ -351,7 +377,7 @@ void Widget::spriteMovement_M2()
 	}
 	if (currentMovement.right)
 	{
-                qDebug() << "RIGHT";
+                qDebug() << "RIGHT-1";
 		QPointF speedPoint (0.8, 0);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
@@ -367,7 +393,7 @@ void Widget::spriteMovement_M2()
 	}
 	if (currentMovement.left)
 	{
-                qDebug() << "LEFT";
+                qDebug() << "LEFT-1";
 		QPointF speedPoint (-0.8, 0);
 		QPointF finalPosPoint (speedPoint.rx() * qCos (qDegreesToRadians (aThingyToMove->rotation()))
 				+ speedPoint.ry() * qSin (qDegreesToRadians (aThingyToMove->rotation())),
@@ -383,7 +409,7 @@ void Widget::spriteMovement_M2()
 	}
 	if (currentMovement.clock)
 	{
-        //		qDebug() << "CLOCK";
+                qDebug() << "CLOCK";
         //		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (1));
 		aThingyToMove->setRotation (aThingyToMove->rotation() + 1);
         //	aThingyToMove->sceneTransform();
@@ -400,7 +426,7 @@ void Widget::spriteMovement_M2()
 	}
 	if (currentMovement.anticlock)
 	{
-        //		qDebug() << "ANTICLOCK";
+                qDebug() << "ANTICLOCK";
         //		aThingyToMove->setTransform (aThingyToMove->sceneTransform().rotate (-1));
 		aThingyToMove->setRotation (aThingyToMove->rotation() - 1);
         //		aThingyToMove->setTransform (aThingyToMove->transform().rotate (-1));
@@ -674,7 +700,7 @@ QPointF Widget::calcDeltaMovement (qreal rotatedAngle, qreal movementDirection)
 
 void Widget::on_pB_SwitchMovementMethod_clicked()
 {
-	static bool a = false;
+    static bool a = false;
 	if (a)
 	{
 		upArrow->setText ("↑");  // Proper up arrow symbol added
